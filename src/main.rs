@@ -10,14 +10,14 @@ fn main() -> io::Result<()> {
     disk.seek(SeekFrom::Start(1024))?;
     let mut sb_buffer = [0u8; 1024];
     let _ = disk.read_exact(&mut sb_buffer);
-    let mut superblock: ext2superblock = bincode::deserialize(&sb_buffer).unwrap();
+    let superblock: ext2superblock = bincode::deserialize(&sb_buffer).unwrap();
 
     println!("block count is: {}, inode count is: {}", superblock.s_blocks_count, superblock.s_inodes_count);
 
     disk.seek(SeekFrom::Start(2048))?;
     let mut bg_buffer = [0u8; 1024];
     let _ = disk.read_exact(&mut bg_buffer);
-    let mut block_group_descriptor_table: ext2block_group_descriptor_table = bincode::deserialize(&bg_buffer).unwrap();
+    let block_group_descriptor_table: ext2block_group_descriptor_table = bincode::deserialize(&bg_buffer).unwrap();
 
     println!("used_dirs_count is {}, free inodes: {}, free blocks: {}", block_group_descriptor_table.bg_used_dirs_count, block_group_descriptor_table.bg_free_inodes_count, block_group_descriptor_table.bg_free_blocks_count);
 
