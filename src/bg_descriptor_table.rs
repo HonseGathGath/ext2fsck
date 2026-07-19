@@ -4,8 +4,8 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize)]
 
 pub struct ext2block_group_descriptor_table {
-    bg_block_bitmap: u32,
-    bg_inode_bitmap: u32,
+    pub bg_block_bitmap: u32,
+    pub bg_inode_bitmap: u32,
     bg_inode_table: u32,
     pub bg_free_blocks_count: u16,
     pub bg_free_inodes_count: u16,

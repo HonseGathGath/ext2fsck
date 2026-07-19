@@ -1,6 +1,8 @@
 use std::{fs::OpenOptions, io::{self, Read, Seek, SeekFrom}};
 
-use ext2fsck::{bg_descriptor_table::ext2block_group_descriptor_table, superblock::ext2superblock};
+use ext2fsck::{bg_descriptor_table::ext2block_group_descriptor_table, checker::check, superblock::ext2superblock};
+
+
 
 fn main() -> io::Result<()> {
     println!("from the fsck");
@@ -21,8 +23,7 @@ fn main() -> io::Result<()> {
 
     println!("used_dirs_count is {}, free inodes: {}, free blocks: {}", block_group_descriptor_table.bg_used_dirs_count, block_group_descriptor_table.bg_free_inodes_count, block_group_descriptor_table.bg_free_blocks_count);
 
-
-    
+    let _ = check(superblock, block_group_descriptor_table, &mut disk);    
 
     Ok(())
 
